@@ -10,6 +10,7 @@ workflow SBayesRC_main {
 
      input {
         File ld
+        File ma
         File annot
         Int memSizeGB = 96
         Int threadCount = 4
@@ -18,7 +19,7 @@ workflow SBayesRC_main {
     }
 
     call run_checking { 
-			input: ld = ld, annot=annot, memSizeGB=memSizeGB, threadCount=threadCount, diskSizeGB=diskSizeGB, out_prefix=out_prefix
+			input: ld = ld, ma=ma, annot=annot, memSizeGB=memSizeGB, threadCount=threadCount, diskSizeGB=diskSizeGB, out_prefix=out_prefix
 	}
 
     output {
@@ -31,6 +32,7 @@ task run_checking {
     input {
         File ld
         File annot
+        File ma
         Int memSizeGB
         Int threadCount
         Int diskSizeGB
@@ -40,7 +42,7 @@ task run_checking {
     
     command <<<
     tar -xf ~{ld}
-    Rscript -e "SBayesRC::sbayesrc(mafile='~{out_prefix}_imp.ma', LDdir='~{ld_name}/', outPrefix='~{out_prefix}_sbrc', annot='~{annot}', log2file=TRUE)"
+    Rscript -e "SBayesRC::sbayesrc(mafile='~{ma}', LDdir='~{ld_name}/', outPrefix='~{out_prefix}_sbrc', annot='~{annot}', log2file=TRUE)"
     >>>
 
     output {
