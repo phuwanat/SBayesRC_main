@@ -9,17 +9,20 @@ workflow SBayesRC_main {
     }
 
      input {
-        Array[File] vcf_files
-        File ref_fa
-        File ref_fai
+        Directory ld_folder
+        File annot
+        Int memSizeGB = 96
+        Int threadCount = 4
+        Int diskSizeGB = 200
+	    String out_prefix
     }
 
     call run_checking { 
-			input: vcf = this_file, ref_fa = ref_fa, ref_fai = ref_fai
+			input: ld_folder = ld_folder, annot=annot, memSizeGB=memSizeGB, threadCount=threadCount, diskSizeGB=diskSizeGB, out_prefix=out_prefix
 	}
 
     output {
-        Array[Array[File]] report_files = run_checking.out_files
+        Array[File] out_files = run_checking.out_files
     }
 
 }
@@ -28,10 +31,10 @@ task run_checking {
     input {
         Directory ld_folder
         File annot
-        Int memSizeGB = 96
-        Int threadCount = 4
-        Int diskSizeGB = 200
-	String out_prefix
+        Int memSizeGB
+        Int threadCount
+        Int diskSizeGB
+	    String out_prefix
     }
     
     command <<<
