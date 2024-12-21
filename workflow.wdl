@@ -42,10 +42,10 @@ task run_checking {
     }
     
     command <<<
-    mkdir ref
-    tar -xf ~{ld} -C ref/
-    unzip ~{annot} -d ref/
-    Rscript -e "SBayesRC::sbayesrc(mafile='~{ma}', LDdir='ref/~{ld_name}/', outPrefix='~{out_prefix}_sbrc', annot='ref/~{annot_name}.txt', log2file=TRUE)"
+    mkdir ~/ref
+    tar -xf ~{ld} -C ~/ref/
+    unzip ~{annot} -d ~/ref/
+    Rscript -e "SBayesRC::sbayesrc(mafile='~{ma}', LDdir='~/ref/~{ld_name}/', outPrefix='~{out_prefix}_sbrc', annot='~/ref/~{annot_name}.txt', log2file=TRUE)"
     >>>
 
     output {
