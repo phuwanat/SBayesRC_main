@@ -38,11 +38,13 @@ task run_checking {
         Int diskSizeGB
 	    String out_prefix
         String ld_name = basename(ld, ".tar.xz")
+        String annot_name = basename(annot, ".zip")
     }
     
     command <<<
     tar -xf ~{ld}
-    Rscript -e "SBayesRC::sbayesrc(mafile='~{ma}', LDdir='~{ld_name}/', outPrefix='~{out_prefix}_sbrc', annot='~{annot}', log2file=TRUE)"
+    unzip ~{annot}
+    Rscript -e "SBayesRC::sbayesrc(mafile='~{ma}', LDdir='~{ld_name}/', outPrefix='~{out_prefix}_sbrc', annot='~{annot_name}.txt', log2file=TRUE)"
     >>>
 
     output {
