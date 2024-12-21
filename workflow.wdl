@@ -56,7 +56,7 @@ task run_checking {
         memory: memSizeGB + " GB"
         cpu: threadCount
         disks: "local-disk " + diskSizeGB + " SSD"
-        docker: "zhiliz/sbayesrc:0.2.6" 
+        docker: "phuwanat/sbayesrcmain:v1"  #"zhiliz/sbayesrc:0.2.6"
         preemptible: 1
     }
 
