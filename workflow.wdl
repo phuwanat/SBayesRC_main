@@ -13,7 +13,7 @@ workflow SBayesRC_main {
         File ma
         File annot
         Int memSizeGB = 96
-        Int threadCount = 4
+        Int threadCount = 16
         Int diskSizeGB = 2000
 	    String out_prefix
     }
@@ -42,6 +42,7 @@ task run_checking {
     }
     
     command <<<
+    export OMP_NUM_THREADS=16
     mkdir /cromwell_root/ref
     echo "start"
     tar -xf ~{ld} -C /cromwell_root/ref/
