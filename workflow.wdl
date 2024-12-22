@@ -42,7 +42,7 @@ task run_checking {
     }
     
     command <<<
-    export OMP_NUM_THREADS=16
+    export OMP_NUM_THREADS=~{threadCount}
     mkdir /cromwell_root/ref
     echo "start"
     tar -xf ~{ld} -C /cromwell_root/ref/
