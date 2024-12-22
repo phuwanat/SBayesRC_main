@@ -14,7 +14,7 @@ workflow SBayesRC_main {
         File annot
         Int memSizeGB = 96
         Int threadCount = 4
-        Int diskSizeGB = 200
+        Int diskSizeGB = 2000
 	    String out_prefix
     }
 
@@ -44,7 +44,9 @@ task run_checking {
     command <<<
     mkdir ~/ref
     tar -xf ~{ld} -C ~/ref/
+    echo "tar finished"
     unzip ~{annot} -d ~/ref/
+    echo "unzip finished"
     Rscript -e "SBayesRC::sbayesrc(mafile='~{ma}', LDdir='~/ref/~{ld_name}/', outPrefix='~{out_prefix}_sbrc', annot='~/ref/~{annot_name}.txt', log2file=TRUE)"
     >>>
 
@@ -55,7 +57,7 @@ task run_checking {
     runtime {
         memory: memSizeGB + " GB"
         cpu: threadCount
-        disks: "local-disk " + diskSizeGB + " SSD"
+        disks: "local-disk " + diskSizeGB + " HDD"
         docker: "phuwanat/sbayesrcmain:v1"  #"zhiliz/sbayesrc:0.2.6"
         preemptible: 1
     }
