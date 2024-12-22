@@ -42,12 +42,13 @@ task run_checking {
     }
     
     command <<<
-    mkdir ~/ref
-    tar -xf ~{ld} -C ~/ref/
+    mkdir /cromwell_root/ref
+    echo "start"
+    tar -xf ~{ld} -C /cromwell_root/ref/
     echo "tar finished"
-    unzip ~{annot} -d ~/ref/
+    unzip ~{annot} -d /cromwell_root/ref/
     echo "unzip finished"
-    Rscript -e "SBayesRC::sbayesrc(mafile='~{ma}', LDdir='~/ref/~{ld_name}/', outPrefix='~{out_prefix}_sbrc', annot='~/ref/~{annot_name}.txt', log2file=TRUE)"
+    Rscript -e "SBayesRC::sbayesrc(mafile='~{ma}', LDdir='/cromwell_root/ref/~{ld_name}/', outPrefix='~{out_prefix}_sbrc', annot='/cromwell_root/ref/~{annot_name}.txt', log2file=TRUE)"
     >>>
 
     output {
